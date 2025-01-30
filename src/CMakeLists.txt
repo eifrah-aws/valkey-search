@@ -1,0 +1,183 @@
+## --+ Auto generated file +--
+
+add_subdirectory(coordinator)
+add_subdirectory(utils)
+add_subdirectory(commands)
+add_subdirectory(query)
+add_subdirectory(indexes)
+set(SRCS_MODULE_LOADER
+    ${CMAKE_CURRENT_LIST_DIR}/module_loader.cc
+)
+
+add_library(module_loader STATIC ${SRCS_MODULE_LOADER})
+target_include_directories(module_loader PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(module_loader PUBLIC keyspace_event_manager)
+target_link_libraries(module_loader PUBLIC valkey_search)
+target_link_libraries(module_loader PUBLIC commands)
+target_link_libraries(module_loader PUBLIC module)
+target_link_libraries(module_loader PUBLIC valkey_module)
+
+set(SRCS_VALKEY_SEARCH
+    ${CMAKE_CURRENT_LIST_DIR}/valkey_search.cc
+    ${CMAKE_CURRENT_LIST_DIR}/valkey_search.h
+)
+
+add_library(valkey_search STATIC ${SRCS_VALKEY_SEARCH})
+target_include_directories(valkey_search PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(valkey_search PUBLIC attribute_data_type)
+target_link_libraries(valkey_search PUBLIC index_schema)
+target_link_libraries(valkey_search PUBLIC metrics)
+target_link_libraries(valkey_search PUBLIC schema_manager)
+target_link_libraries(valkey_search PUBLIC vector_externalizer)
+target_link_libraries(valkey_search PUBLIC client_pool)
+target_link_libraries(valkey_search PUBLIC grpc_suspender)
+target_link_libraries(valkey_search PUBLIC metadata_manager)
+target_link_libraries(valkey_search PUBLIC server)
+target_link_libraries(valkey_search PUBLIC util)
+target_link_libraries(valkey_search PUBLIC string_interning)
+target_link_libraries(valkey_search PUBLIC command_parser)
+target_link_libraries(valkey_search PUBLIC latency_sampler)
+target_link_libraries(valkey_search PUBLIC log)
+target_link_libraries(valkey_search PUBLIC managed_pointers)
+target_link_libraries(valkey_search PUBLIC memory_allocation)
+target_link_libraries(valkey_search PUBLIC thread_pool)
+target_link_libraries(valkey_search PUBLIC utils)
+target_link_libraries(valkey_search PUBLIC status_macros)
+target_link_libraries(valkey_search PUBLIC valkey_module)
+
+set(SRCS_KEYSPACE_EVENT_MANAGER
+    ${CMAKE_CURRENT_LIST_DIR}/keyspace_event_manager.cc
+    ${CMAKE_CURRENT_LIST_DIR}/keyspace_event_manager.h
+)
+
+add_library(keyspace_event_manager STATIC ${SRCS_KEYSPACE_EVENT_MANAGER})
+target_include_directories(keyspace_event_manager PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(keyspace_event_manager PUBLIC attribute_data_type)
+target_link_libraries(keyspace_event_manager PUBLIC vector_externalizer)
+target_link_libraries(keyspace_event_manager PUBLIC patricia_tree)
+target_link_libraries(keyspace_event_manager PUBLIC type_conversions)
+target_link_libraries(keyspace_event_manager PUBLIC utils)
+target_link_libraries(keyspace_event_manager PUBLIC status_macros)
+target_link_libraries(keyspace_event_manager PUBLIC valkey_module)
+
+set(SRCS_ATTRIBUTE
+    ${CMAKE_CURRENT_LIST_DIR}/attribute.h
+)
+
+add_library(attribute STATIC ${SRCS_ATTRIBUTE})
+target_include_directories(attribute PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(attribute PUBLIC index_schema_cc_proto)
+target_link_libraries(attribute PUBLIC index_base)
+target_link_libraries(attribute PUBLIC managed_pointers)
+target_link_libraries(attribute PUBLIC valkey_module)
+
+set(SRCS_METRICS
+    ${CMAKE_CURRENT_LIST_DIR}/metrics.h
+)
+
+add_library(metrics STATIC ${SRCS_METRICS})
+target_include_directories(metrics PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(metrics PUBLIC latency_sampler)
+
+set(SRCS_INDEX_SCHEMA
+    ${CMAKE_CURRENT_LIST_DIR}/index_schema.cc
+    ${CMAKE_CURRENT_LIST_DIR}/index_schema.h
+)
+
+add_library(index_schema STATIC ${SRCS_INDEX_SCHEMA})
+target_include_directories(index_schema PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(index_schema PUBLIC attribute)
+target_link_libraries(index_schema PUBLIC attribute_data_type)
+target_link_libraries(index_schema PUBLIC index_schema_cc_proto)
+target_link_libraries(index_schema PUBLIC keyspace_event_manager)
+target_link_libraries(index_schema PUBLIC metrics)
+target_link_libraries(index_schema PUBLIC rdb_io_stream)
+target_link_libraries(index_schema PUBLIC vector_externalizer)
+target_link_libraries(index_schema PUBLIC index_base)
+target_link_libraries(index_schema PUBLIC numeric)
+target_link_libraries(index_schema PUBLIC tag)
+target_link_libraries(index_schema PUBLIC vector_base)
+target_link_libraries(index_schema PUBLIC vector_flat)
+target_link_libraries(index_schema PUBLIC vector_hnsw)
+target_link_libraries(index_schema PUBLIC string_interning)
+target_link_libraries(index_schema PUBLIC log)
+target_link_libraries(index_schema PUBLIC managed_pointers)
+target_link_libraries(index_schema PUBLIC module_type)
+target_link_libraries(index_schema PUBLIC thread_pool)
+target_link_libraries(index_schema PUBLIC time_sliced_mrmw_mutex)
+target_link_libraries(index_schema PUBLIC type_conversions)
+target_link_libraries(index_schema PUBLIC utils)
+target_link_libraries(index_schema PUBLIC status_macros)
+target_link_libraries(index_schema PUBLIC valkey_module)
+
+set(SRCS_ATTRIBUTE_DATA_TYPE
+    ${CMAKE_CURRENT_LIST_DIR}/attribute_data_type.cc
+    ${CMAKE_CURRENT_LIST_DIR}/attribute_data_type.h
+)
+
+add_library(attribute_data_type STATIC ${SRCS_ATTRIBUTE_DATA_TYPE})
+target_include_directories(attribute_data_type PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(attribute_data_type PUBLIC index_schema_cc_proto)
+target_link_libraries(attribute_data_type PUBLIC managed_pointers)
+target_link_libraries(attribute_data_type PUBLIC type_conversions)
+target_link_libraries(attribute_data_type PUBLIC utils)
+target_link_libraries(attribute_data_type PUBLIC valkey_module)
+
+set(SRCS_RDB_IO_STREAM
+    ${CMAKE_CURRENT_LIST_DIR}/rdb_io_stream.h
+)
+
+add_library(rdb_io_stream STATIC ${SRCS_RDB_IO_STREAM})
+target_include_directories(rdb_io_stream PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(rdb_io_stream PUBLIC iostream)
+target_link_libraries(rdb_io_stream PUBLIC managed_pointers)
+target_link_libraries(rdb_io_stream PUBLIC valkey_module)
+
+set(SRCS_SCHEMA_MANAGER
+    ${CMAKE_CURRENT_LIST_DIR}/schema_manager.cc
+    ${CMAKE_CURRENT_LIST_DIR}/schema_manager.h
+)
+
+add_library(schema_manager STATIC ${SRCS_SCHEMA_MANAGER})
+target_include_directories(schema_manager PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(schema_manager PUBLIC index_schema)
+target_link_libraries(schema_manager PUBLIC index_schema_cc_proto)
+target_link_libraries(schema_manager PUBLIC metrics)
+target_link_libraries(schema_manager PUBLIC rdb_io_stream)
+target_link_libraries(schema_manager PUBLIC vector_externalizer)
+target_link_libraries(schema_manager PUBLIC coordinator_cc_proto)
+target_link_libraries(schema_manager PUBLIC metadata_manager)
+target_link_libraries(schema_manager PUBLIC log)
+target_link_libraries(schema_manager PUBLIC managed_pointers)
+target_link_libraries(schema_manager PUBLIC thread_pool)
+target_link_libraries(schema_manager PUBLIC utils)
+target_link_libraries(schema_manager PUBLIC status_macros)
+target_link_libraries(schema_manager PUBLIC valkey_module)
+
+set(SRCS_SERVER_EVENTS
+    ${CMAKE_CURRENT_LIST_DIR}/server_events.cc
+    ${CMAKE_CURRENT_LIST_DIR}/server_events.h
+)
+
+add_library(server_events STATIC ${SRCS_SERVER_EVENTS})
+target_include_directories(server_events PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(server_events PUBLIC schema_manager)
+target_link_libraries(server_events PUBLIC valkey_search)
+target_link_libraries(server_events PUBLIC metadata_manager)
+target_link_libraries(server_events PUBLIC valkey_module)
+
+set(SRCS_VECTOR_EXTERNALIZER
+    ${CMAKE_CURRENT_LIST_DIR}/vector_externalizer.cc
+    ${CMAKE_CURRENT_LIST_DIR}/vector_externalizer.h
+)
+
+add_library(vector_externalizer STATIC ${SRCS_VECTOR_EXTERNALIZER})
+target_include_directories(vector_externalizer PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(vector_externalizer PUBLIC attribute_data_type)
+target_link_libraries(vector_externalizer PUBLIC index_schema_cc_proto)
+target_link_libraries(vector_externalizer PUBLIC lru)
+target_link_libraries(vector_externalizer PUBLIC string_interning)
+target_link_libraries(vector_externalizer PUBLIC managed_pointers)
+target_link_libraries(vector_externalizer PUBLIC utils)
+target_link_libraries(vector_externalizer PUBLIC valkey_module)
+

@@ -1,0 +1,82 @@
+# --+ Auto generated file +--
+
+set(SRCS_SERVER ${CMAKE_CURRENT_LIST_DIR}/server.cc ${CMAKE_CURRENT_LIST_DIR}/server.h)
+
+add_library(server STATIC ${SRCS_SERVER})
+target_include_directories(server PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(server PUBLIC coordinator_cc_grpc_proto)
+target_link_libraries(server PUBLIC coordinator_cc_proto)
+target_link_libraries(server PUBLIC grpc_suspender)
+target_link_libraries(server PUBLIC metadata_manager)
+target_link_libraries(server PUBLIC search_converter)
+target_link_libraries(server PUBLIC util)
+target_link_libraries(server PUBLIC metrics)
+target_link_libraries(server PUBLIC vector_base)
+target_link_libraries(server PUBLIC response_generator)
+target_link_libraries(server PUBLIC search)
+target_link_libraries(server PUBLIC latency_sampler)
+target_link_libraries(server PUBLIC log)
+target_link_libraries(server PUBLIC managed_pointers)
+target_link_libraries(server PUBLIC thread_pool)
+target_link_libraries(server PUBLIC type_conversions)
+target_link_libraries(server PUBLIC utils)
+target_link_libraries(server PUBLIC valkey_module)
+
+set(SRCS_CLIENT ${CMAKE_CURRENT_LIST_DIR}/client.cc ${CMAKE_CURRENT_LIST_DIR}/client.h)
+
+add_library(client STATIC ${SRCS_CLIENT})
+target_include_directories(client PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(client PUBLIC coordinator_cc_grpc_proto)
+target_link_libraries(client PUBLIC coordinator_cc_proto)
+target_link_libraries(client PUBLIC grpc_suspender)
+target_link_libraries(client PUBLIC metrics)
+target_link_libraries(client PUBLIC latency_sampler)
+target_link_libraries(client PUBLIC managed_pointers)
+
+set(SRCS_CLIENT_POOL ${CMAKE_CURRENT_LIST_DIR}/client_pool.h)
+
+add_library(client_pool STATIC ${SRCS_CLIENT_POOL})
+target_include_directories(client_pool PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(client_pool PUBLIC client)
+target_link_libraries(client_pool PUBLIC managed_pointers)
+
+set(SRCS_UTIL ${CMAKE_CURRENT_LIST_DIR}/util.h)
+
+add_library(util INTERFACE ${SRCS_UTIL})
+target_include_directories(util INTERFACE ${CMAKE_CURRENT_LIST_DIR})
+
+set(SRCS_METADATA_MANAGER ${CMAKE_CURRENT_LIST_DIR}/metadata_manager.cc ${CMAKE_CURRENT_LIST_DIR}/metadata_manager.h)
+
+add_library(metadata_manager STATIC ${SRCS_METADATA_MANAGER})
+target_include_directories(metadata_manager PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(metadata_manager PUBLIC client_pool)
+target_link_libraries(metadata_manager PUBLIC coordinator_cc_proto)
+target_link_libraries(metadata_manager PUBLIC util)
+target_link_libraries(metadata_manager PUBLIC rdb_io_stream)
+target_link_libraries(metadata_manager PUBLIC log)
+target_link_libraries(metadata_manager PUBLIC managed_pointers)
+target_link_libraries(metadata_manager PUBLIC type_conversions)
+target_link_libraries(metadata_manager PUBLIC utils)
+target_link_libraries(metadata_manager PUBLIC status_macros)
+target_link_libraries(metadata_manager PUBLIC valkey_module)
+
+set(SRCS_SEARCH_CONVERTER ${CMAKE_CURRENT_LIST_DIR}/search_converter.cc ${CMAKE_CURRENT_LIST_DIR}/search_converter.h)
+
+add_library(search_converter STATIC ${SRCS_SEARCH_CONVERTER})
+target_include_directories(search_converter PUBLIC ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(search_converter PUBLIC coordinator_cc_proto)
+target_link_libraries(search_converter PUBLIC index_schema)
+target_link_libraries(search_converter PUBLIC schema_manager)
+target_link_libraries(search_converter PUBLIC index_base)
+target_link_libraries(search_converter PUBLIC numeric)
+target_link_libraries(search_converter PUBLIC tag)
+target_link_libraries(search_converter PUBLIC predicate_header)
+target_link_libraries(search_converter PUBLIC search)
+target_link_libraries(search_converter PUBLIC managed_pointers)
+target_link_libraries(search_converter PUBLIC type_conversions)
+target_link_libraries(search_converter PUBLIC status_macros)
+
+set(SRCS_GRPC_SUSPENDER ${CMAKE_CURRENT_LIST_DIR}/grpc_suspender.cc ${CMAKE_CURRENT_LIST_DIR}/grpc_suspender.h)
+
+add_library(grpc_suspender STATIC ${SRCS_GRPC_SUSPENDER})
+target_include_directories(grpc_suspender PUBLIC ${CMAKE_CURRENT_LIST_DIR})

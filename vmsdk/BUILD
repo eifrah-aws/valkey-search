@@ -15,7 +15,7 @@ licenses(["notice"])
 
 exports_files(["LICENSE"])
 
-exports_files(srcs = [
+exports_files([
     "memory_tracking_exclusions.lds",
     "versionscript.lds",
 ])
