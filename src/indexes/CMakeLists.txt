@@ -1,7 +1,7 @@
 # --+ Auto generated file +--
 
 # We need protobuf
-create_proto_library(${INDEX_SCHEMA_PROTO_SRC_DIR} "src" "index_schema" "index_schema_cc_proto")
+create_proto_library("src" "index_schema" "index_schema_cc_proto")
 message(STATUS "Created proto library index_schema_cc_proto")
 
 add_library(index_base INTERFACE ${SRCS_INDEX_BASE})

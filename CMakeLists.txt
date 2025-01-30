@@ -15,6 +15,10 @@ if(NOT EXISTS "${CMAKE_SOURCE_DIR}/submodules/googletest")
     message(FATAL_ERROR "Make sure to run 'git submodule update --init'")
 endif()
 
+find_package(grpc CONFIG REQUIRED)
+get_target_property(grpc_cpp_plugin_location gRPC::grpc_cpp_plugin LOCATION)
+message(STATUS "gRPC C++ plugin: ${grpc_cpp_plugin_location}")
+
 add_subdirectory(${CMAKE_SOURCE_DIR}/submodules/abseil-cpp)
 add_subdirectory(${CMAKE_SOURCE_DIR}/submodules/googletest)
 
@@ -26,24 +30,29 @@ include_directories(${CMAKE_SOURCE_DIR})
 include_directories(${CMAKE_SOURCE_DIR}/submodules/abseil-cpp)
 include_directories(${CMAKE_SOURCE_DIR}/submodules/googletest/googletest/include)
 
-# protobuf helper method. Generated files are placed here: ${CMAKE_BINARY_DIR}/generated/${PROTO_OUT}, this means that
-# PROTO_OUT must be relative path (or an empty string). The generated target will add to the include path
-# ${CMAKE_BINARY_DIR}/generated
-function(create_proto_library PROTO_FILE_SRC_DIR PROTO_OUT PROTO_BASE_FILE_NAME OUT_LIBNAME)
+function(create_proto_library PROTO_FILE_SRC_DIR PROTO_BASE_FILE_NAME OUT_LIBNAME)
     find_package(Protobuf REQUIRED)
-    set(PROTO_OUT ${CMAKE_BINARY_DIR}/generated/${PROTO_OUT})
-    file(MAKE_DIRECTORY ${PROTO_OUT})
-    execute_process(
-        COMMAND ${Protobuf_PROTOC_EXECUTABLE} --cpp_out=${PROTO_OUT} --proto_path=${PROTO_FILE_SRC_DIR}
-                ${PROTO_FILE_SRC_DIR}/${PROTO_BASE_FILE_NAME}.proto
-        OUTPUT_VARIABLE PROTOC_OUTPUT
-        OUTPUT_STRIP_TRAILING_WHITESPACE)
+    set(PROTO_OUT_DIR ${CMAKE_BINARY_DIR}/${PROTO_FILE_SRC_DIR})
+    set(PROTO_IN_DIR ${CMAKE_SOURCE_DIR}/${PROTO_FILE_SRC_DIR})
+    file(MAKE_DIRECTORY ${PROTO_OUT_DIR})
+    if(NOT EXISTS ${PROTO_OUT}/${PROTO_BASE_FILE_NAME}.pb.h OR NOT EXISTS
+                                                               ${PROTO_OUT_DIR}/${PROTO_BASE_FILE_NAME}.pb.cc)
+        execute_process(
+            COMMAND ${Protobuf_PROTOC_EXECUTABLE} --cpp_out=${PROTO_OUT_DIR} --proto_path=${PROTO_IN_DIR}
+                    ${PROTO_IN_DIR}/${PROTO_BASE_FILE_NAME}.proto
+            OUTPUT_VARIABLE PROTOC_OUTPUT
+            OUTPUT_STRIP_TRAILING_WHITESPACE)
+    endif()
     message(STATUS "Creating target ${OUT_LIBNAME}")
-    add_library(${OUT_LIBNAME} STATIC ${PROTO_OUT}/${PROTO_BASE_FILE_NAME}.pb.h
-                                      ${PROTO_OUT}/${PROTO_BASE_FILE_NAME}.pb.cc)
+    set(__LIB_SRCS "${PROTO_OUT_DIR}/${PROTO_BASE_FILE_NAME}.pb.h" "${PROTO_OUT_DIR}/${PROTO_BASE_FILE_NAME}.pb.cc")
+    add_library(${OUT_LIBNAME} STATIC ${__LIB_SRCS})
     target_link_libraries(${OUT_LIBNAME} PUBLIC ${Protobuf_LIBRARIES})
-    target_include_directories(${OUT_LIBNAME} PUBLIC ${CMAKE_BINARY_DIR}/generated)
+    target_include_directories(${OUT_LIBNAME} PUBLIC ${CMAKE_BINARY_DIR})
+    target_include_directories(${OUT_LIBNAME} PUBLIC ${PROTO_OUT_DIR})
     target_include_directories(${OUT_LIBNAME} PUBLIC ${Protobuf_INCLUDE_DIRS})
+    unset(PROTO_OUT_DIR CACHE)
+    unset(PROTO_IN_DIR CACHE)
+    unset(__LIB_SRCS CACHE)
 endfunction()
 
 add_subdirectory(vmsdk)

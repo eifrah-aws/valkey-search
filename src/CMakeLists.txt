@@ -1,9 +1,5 @@
 # --+ Auto generated file +--
 
-set(INDEX_SCHEMA_PROTO_OUT_DIR ${CMAKE_BINARY_DIR}/generated)
-file(MAKE_DIRECTORY ${INDEX_SCHEMA_PROTO_OUT_DIR})
-set(INDEX_SCHEMA_PROTO_SRC_DIR ${CMAKE_CURRENT_LIST_DIR})
-
 add_subdirectory(coordinator)
 add_subdirectory(utils)
 add_subdirectory(commands)
