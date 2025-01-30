@@ -9,12 +9,12 @@ set(SRCS_HNSWLIB_VMSDK
     ${CMAKE_CURRENT_LIST_DIR}/stop_condition.h
     ${CMAKE_CURRENT_LIST_DIR}/visited_list_pool.h)
 
-add_library(hnswlib_vmsdk STATIC ${SRCS_HNSWLIB_VMSDK})
-target_include_directories(hnswlib_vmsdk PUBLIC ${CMAKE_CURRENT_LIST_DIR})
-target_link_libraries(hnswlib_vmsdk PUBLIC iostream)
-target_link_libraries(hnswlib_vmsdk PUBLIC simsimd)
-target_link_libraries(hnswlib_vmsdk PUBLIC memory_allocation_overrides)
-target_link_libraries(hnswlib_vmsdk PUBLIC status_macros)
+add_library(hnswlib_vmsdk INTERFACE ${SRCS_HNSWLIB_VMSDK})
+target_include_directories(hnswlib_vmsdk INTERFACE ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(hnswlib_vmsdk INTERFACE iostream)
+target_link_libraries(hnswlib_vmsdk INTERFACE simsimd)
+target_link_libraries(hnswlib_vmsdk INTERFACE memory_allocation_overrides)
+target_link_libraries(hnswlib_vmsdk INTERFACE status_macros)
 
 set(SRCS_SIMSIMD ${CMAKE_CURRENT_LIST_DIR}/simsimd.h)
 

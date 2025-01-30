@@ -1,13 +1,15 @@
-## --+ Auto generated file +--
+# --+ Auto generated file +--
+
+set(INDEX_SCHEMA_PROTO_OUT_DIR ${CMAKE_BINARY_DIR}/generated)
+file(MAKE_DIRECTORY ${INDEX_SCHEMA_PROTO_OUT_DIR})
+set(INDEX_SCHEMA_PROTO_SRC_DIR ${CMAKE_CURRENT_LIST_DIR})
 
 add_subdirectory(coordinator)
 add_subdirectory(utils)
 add_subdirectory(commands)
 add_subdirectory(query)
 add_subdirectory(indexes)
-set(SRCS_MODULE_LOADER
-    ${CMAKE_CURRENT_LIST_DIR}/module_loader.cc
-)
+set(SRCS_MODULE_LOADER ${CMAKE_CURRENT_LIST_DIR}/module_loader.cc)
 
 add_library(module_loader STATIC ${SRCS_MODULE_LOADER})
 target_include_directories(module_loader PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -17,10 +19,7 @@ target_link_libraries(module_loader PUBLIC commands)
 target_link_libraries(module_loader PUBLIC module)
 target_link_libraries(module_loader PUBLIC valkey_module)
 
-set(SRCS_VALKEY_SEARCH
-    ${CMAKE_CURRENT_LIST_DIR}/valkey_search.cc
-    ${CMAKE_CURRENT_LIST_DIR}/valkey_search.h
-)
+set(SRCS_VALKEY_SEARCH ${CMAKE_CURRENT_LIST_DIR}/valkey_search.cc ${CMAKE_CURRENT_LIST_DIR}/valkey_search.h)
 
 add_library(valkey_search STATIC ${SRCS_VALKEY_SEARCH})
 target_include_directories(valkey_search PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -45,10 +44,8 @@ target_link_libraries(valkey_search PUBLIC utils)
 target_link_libraries(valkey_search PUBLIC status_macros)
 target_link_libraries(valkey_search PUBLIC valkey_module)
 
-set(SRCS_KEYSPACE_EVENT_MANAGER
-    ${CMAKE_CURRENT_LIST_DIR}/keyspace_event_manager.cc
-    ${CMAKE_CURRENT_LIST_DIR}/keyspace_event_manager.h
-)
+set(SRCS_KEYSPACE_EVENT_MANAGER ${CMAKE_CURRENT_LIST_DIR}/keyspace_event_manager.cc
+                                ${CMAKE_CURRENT_LIST_DIR}/keyspace_event_manager.h)
 
 add_library(keyspace_event_manager STATIC ${SRCS_KEYSPACE_EVENT_MANAGER})
 target_include_directories(keyspace_event_manager PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -60,9 +57,7 @@ target_link_libraries(keyspace_event_manager PUBLIC utils)
 target_link_libraries(keyspace_event_manager PUBLIC status_macros)
 target_link_libraries(keyspace_event_manager PUBLIC valkey_module)
 
-set(SRCS_ATTRIBUTE
-    ${CMAKE_CURRENT_LIST_DIR}/attribute.h
-)
+set(SRCS_ATTRIBUTE ${CMAKE_CURRENT_LIST_DIR}/attribute.h)
 
 add_library(attribute STATIC ${SRCS_ATTRIBUTE})
 target_include_directories(attribute PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -71,18 +66,13 @@ target_link_libraries(attribute PUBLIC index_base)
 target_link_libraries(attribute PUBLIC managed_pointers)
 target_link_libraries(attribute PUBLIC valkey_module)
 
-set(SRCS_METRICS
-    ${CMAKE_CURRENT_LIST_DIR}/metrics.h
-)
+set(SRCS_METRICS ${CMAKE_CURRENT_LIST_DIR}/metrics.h)
 
-add_library(metrics STATIC ${SRCS_METRICS})
-target_include_directories(metrics PUBLIC ${CMAKE_CURRENT_LIST_DIR})
-target_link_libraries(metrics PUBLIC latency_sampler)
+add_library(metrics INTERFACE ${SRCS_METRICS})
+target_include_directories(metrics INTERFACE ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(metrics INTERFACE latency_sampler)
 
-set(SRCS_INDEX_SCHEMA
-    ${CMAKE_CURRENT_LIST_DIR}/index_schema.cc
-    ${CMAKE_CURRENT_LIST_DIR}/index_schema.h
-)
+set(SRCS_INDEX_SCHEMA ${CMAKE_CURRENT_LIST_DIR}/index_schema.cc ${CMAKE_CURRENT_LIST_DIR}/index_schema.h)
 
 add_library(index_schema STATIC ${SRCS_INDEX_SCHEMA})
 target_include_directories(index_schema PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -110,10 +100,8 @@ target_link_libraries(index_schema PUBLIC utils)
 target_link_libraries(index_schema PUBLIC status_macros)
 target_link_libraries(index_schema PUBLIC valkey_module)
 
-set(SRCS_ATTRIBUTE_DATA_TYPE
-    ${CMAKE_CURRENT_LIST_DIR}/attribute_data_type.cc
-    ${CMAKE_CURRENT_LIST_DIR}/attribute_data_type.h
-)
+set(SRCS_ATTRIBUTE_DATA_TYPE ${CMAKE_CURRENT_LIST_DIR}/attribute_data_type.cc
+                             ${CMAKE_CURRENT_LIST_DIR}/attribute_data_type.h)
 
 add_library(attribute_data_type STATIC ${SRCS_ATTRIBUTE_DATA_TYPE})
 target_include_directories(attribute_data_type PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -123,20 +111,15 @@ target_link_libraries(attribute_data_type PUBLIC type_conversions)
 target_link_libraries(attribute_data_type PUBLIC utils)
 target_link_libraries(attribute_data_type PUBLIC valkey_module)
 
-set(SRCS_RDB_IO_STREAM
-    ${CMAKE_CURRENT_LIST_DIR}/rdb_io_stream.h
-)
+set(SRCS_RDB_IO_STREAM ${CMAKE_CURRENT_LIST_DIR}/rdb_io_stream.h)
 
-add_library(rdb_io_stream STATIC ${SRCS_RDB_IO_STREAM})
-target_include_directories(rdb_io_stream PUBLIC ${CMAKE_CURRENT_LIST_DIR})
-target_link_libraries(rdb_io_stream PUBLIC iostream)
-target_link_libraries(rdb_io_stream PUBLIC managed_pointers)
-target_link_libraries(rdb_io_stream PUBLIC valkey_module)
+add_library(rdb_io_stream INTERFACE ${SRCS_RDB_IO_STREAM})
+target_include_directories(rdb_io_stream INTERFACE ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(rdb_io_stream INTERFACE iostream)
+target_link_libraries(rdb_io_stream INTERFACE managed_pointers)
+target_link_libraries(rdb_io_stream INTERFACE valkey_module)
 
-set(SRCS_SCHEMA_MANAGER
-    ${CMAKE_CURRENT_LIST_DIR}/schema_manager.cc
-    ${CMAKE_CURRENT_LIST_DIR}/schema_manager.h
-)
+set(SRCS_SCHEMA_MANAGER ${CMAKE_CURRENT_LIST_DIR}/schema_manager.cc ${CMAKE_CURRENT_LIST_DIR}/schema_manager.h)
 
 add_library(schema_manager STATIC ${SRCS_SCHEMA_MANAGER})
 target_include_directories(schema_manager PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -154,10 +137,7 @@ target_link_libraries(schema_manager PUBLIC utils)
 target_link_libraries(schema_manager PUBLIC status_macros)
 target_link_libraries(schema_manager PUBLIC valkey_module)
 
-set(SRCS_SERVER_EVENTS
-    ${CMAKE_CURRENT_LIST_DIR}/server_events.cc
-    ${CMAKE_CURRENT_LIST_DIR}/server_events.h
-)
+set(SRCS_SERVER_EVENTS ${CMAKE_CURRENT_LIST_DIR}/server_events.cc ${CMAKE_CURRENT_LIST_DIR}/server_events.h)
 
 add_library(server_events STATIC ${SRCS_SERVER_EVENTS})
 target_include_directories(server_events PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -166,10 +146,8 @@ target_link_libraries(server_events PUBLIC valkey_search)
 target_link_libraries(server_events PUBLIC metadata_manager)
 target_link_libraries(server_events PUBLIC valkey_module)
 
-set(SRCS_VECTOR_EXTERNALIZER
-    ${CMAKE_CURRENT_LIST_DIR}/vector_externalizer.cc
-    ${CMAKE_CURRENT_LIST_DIR}/vector_externalizer.h
-)
+set(SRCS_VECTOR_EXTERNALIZER ${CMAKE_CURRENT_LIST_DIR}/vector_externalizer.cc
+                             ${CMAKE_CURRENT_LIST_DIR}/vector_externalizer.h)
 
 add_library(vector_externalizer STATIC ${SRCS_VECTOR_EXTERNALIZER})
 target_include_directories(vector_externalizer PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -180,4 +158,3 @@ target_link_libraries(vector_externalizer PUBLIC string_interning)
 target_link_libraries(vector_externalizer PUBLIC managed_pointers)
 target_link_libraries(vector_externalizer PUBLIC utils)
 target_link_libraries(vector_externalizer PUBLIC valkey_module)
-

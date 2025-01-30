@@ -1,23 +1,20 @@
-## --+ Auto generated file +--
+# --+ Auto generated file +--
 
-set(SRCS_INDEX_BASE
-    ${CMAKE_CURRENT_LIST_DIR}/index_base.h
-)
+# We need protobuf
+create_proto_library(${INDEX_SCHEMA_PROTO_SRC_DIR} "src" "index_schema" "index_schema_cc_proto")
+message(STATUS "Created proto library index_schema_cc_proto")
 
-add_library(index_base STATIC ${SRCS_INDEX_BASE})
-target_include_directories(index_base PUBLIC ${CMAKE_CURRENT_LIST_DIR})
-target_link_libraries(index_base PUBLIC index_schema_cc_proto)
-target_link_libraries(index_base PUBLIC rdb_io_stream)
-target_link_libraries(index_base PUBLIC string_interning)
-target_link_libraries(index_base PUBLIC managed_pointers)
-target_link_libraries(index_base PUBLIC valkey_module)
+add_library(index_base INTERFACE ${SRCS_INDEX_BASE})
+target_include_directories(index_base INTERFACE ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(index_base INTERFACE index_schema_cc_proto)
+target_link_libraries(index_base INTERFACE rdb_io_stream)
+target_link_libraries(index_base INTERFACE string_interning)
+target_link_libraries(index_base INTERFACE managed_pointers)
+target_link_libraries(index_base INTERFACE valkey_module)
 
-set(SRCS_VECTOR_BASE
-    ${CMAKE_CURRENT_LIST_DIR}/vector_base.cc
-    ${CMAKE_CURRENT_LIST_DIR}/vector_base.h
-)
+set(SRCS_VECTOR_BASE ${CMAKE_CURRENT_LIST_DIR}/vector_base.cc ${CMAKE_CURRENT_LIST_DIR}/vector_base.h)
 
-add_library(vector_base STATIC ${SRCS_VECTOR_BASE})
+add_library(vector_base STATIC ${SRCS_VECTOR_BASE} ${INDEX_SCHEMA_PROTO_HDRS} ${INDEX_SCHEMA_PROTO_SRCS})
 target_include_directories(vector_base PUBLIC ${CMAKE_CURRENT_LIST_DIR})
 target_link_libraries(vector_base PUBLIC index_base)
 target_link_libraries(vector_base PUBLIC numeric)
@@ -38,10 +35,7 @@ target_link_libraries(vector_base PUBLIC type_conversions)
 target_link_libraries(vector_base PUBLIC status_macros)
 target_link_libraries(vector_base PUBLIC valkey_module)
 
-set(SRCS_VECTOR_HNSW
-    ${CMAKE_CURRENT_LIST_DIR}/vector_hnsw.cc
-    ${CMAKE_CURRENT_LIST_DIR}/vector_hnsw.h
-)
+set(SRCS_VECTOR_HNSW ${CMAKE_CURRENT_LIST_DIR}/vector_hnsw.cc ${CMAKE_CURRENT_LIST_DIR}/vector_hnsw.h)
 
 add_library(vector_hnsw STATIC ${SRCS_VECTOR_HNSW})
 target_include_directories(vector_hnsw PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -58,10 +52,7 @@ target_link_libraries(vector_hnsw PUBLIC utils)
 target_link_libraries(vector_hnsw PUBLIC status_macros)
 target_link_libraries(vector_hnsw PUBLIC valkey_module)
 
-set(SRCS_NUMERIC
-    ${CMAKE_CURRENT_LIST_DIR}/numeric.cc
-    ${CMAKE_CURRENT_LIST_DIR}/numeric.h
-)
+set(SRCS_NUMERIC ${CMAKE_CURRENT_LIST_DIR}/numeric.cc ${CMAKE_CURRENT_LIST_DIR}/numeric.h)
 
 add_library(numeric STATIC ${SRCS_NUMERIC})
 target_include_directories(numeric PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -72,10 +63,7 @@ target_link_libraries(numeric PUBLIC segment_tree)
 target_link_libraries(numeric PUBLIC string_interning)
 target_link_libraries(numeric PUBLIC valkey_module)
 
-set(SRCS_TAG
-    ${CMAKE_CURRENT_LIST_DIR}/tag.cc
-    ${CMAKE_CURRENT_LIST_DIR}/tag.h
-)
+set(SRCS_TAG ${CMAKE_CURRENT_LIST_DIR}/tag.cc ${CMAKE_CURRENT_LIST_DIR}/tag.h)
 
 add_library(tag STATIC ${SRCS_TAG})
 target_include_directories(tag PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -87,11 +75,9 @@ target_link_libraries(tag PUBLIC string_interning)
 target_link_libraries(tag PUBLIC managed_pointers)
 target_link_libraries(tag PUBLIC type_conversions)
 target_link_libraries(tag PUBLIC valkey_module)
+target_link_libraries(tag PUBLIC ${INDEX_SCHEMA_PROTO_LIB})
 
-set(SRCS_VECTOR_FLAT
-    ${CMAKE_CURRENT_LIST_DIR}/vector_flat.cc
-    ${CMAKE_CURRENT_LIST_DIR}/vector_flat.h
-)
+set(SRCS_VECTOR_FLAT ${CMAKE_CURRENT_LIST_DIR}/vector_flat.cc ${CMAKE_CURRENT_LIST_DIR}/vector_flat.h)
 
 add_library(vector_flat STATIC ${SRCS_VECTOR_FLAT})
 target_include_directories(vector_flat PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -106,4 +92,3 @@ target_link_libraries(vector_flat PUBLIC log)
 target_link_libraries(vector_flat PUBLIC memory_allocation_overrides)
 target_link_libraries(vector_flat PUBLIC status_macros)
 target_link_libraries(vector_flat PUBLIC valkey_module)
-

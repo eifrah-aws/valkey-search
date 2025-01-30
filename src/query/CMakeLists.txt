@@ -1,9 +1,6 @@
-## --+ Auto generated file +--
+# --+ Auto generated file +--
 
-set(SRCS_PREDICATE
-    ${CMAKE_CURRENT_LIST_DIR}/predicate.cc
-    ${CMAKE_CURRENT_LIST_DIR}/predicate.h
-)
+set(SRCS_PREDICATE ${CMAKE_CURRENT_LIST_DIR}/predicate.cc ${CMAKE_CURRENT_LIST_DIR}/predicate.h)
 
 add_library(predicate STATIC ${SRCS_PREDICATE})
 target_include_directories(predicate PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -13,19 +10,14 @@ target_link_libraries(predicate PUBLIC log)
 target_link_libraries(predicate PUBLIC managed_pointers)
 target_link_libraries(predicate PUBLIC type_conversions)
 
-set(SRCS_PREDICATE_HEADER
-    ${CMAKE_CURRENT_LIST_DIR}/predicate.h
-)
+set(SRCS_PREDICATE_HEADER ${CMAKE_CURRENT_LIST_DIR}/predicate.h)
 
-add_library(predicate_header STATIC ${SRCS_PREDICATE_HEADER})
-target_include_directories(predicate_header PUBLIC ${CMAKE_CURRENT_LIST_DIR})
-target_link_libraries(predicate_header PUBLIC managed_pointers)
-target_link_libraries(predicate_header PUBLIC type_conversions)
+add_library(predicate_header INTERFACE ${SRCS_PREDICATE_HEADER})
+target_include_directories(predicate_header INTERFACE ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(predicate_header INTERFACE managed_pointers)
+target_link_libraries(predicate_header INTERFACE type_conversions)
 
-set(SRCS_SEARCH
-    ${CMAKE_CURRENT_LIST_DIR}/search.cc
-    ${CMAKE_CURRENT_LIST_DIR}/search.h
-)
+set(SRCS_SEARCH ${CMAKE_CURRENT_LIST_DIR}/search.cc ${CMAKE_CURRENT_LIST_DIR}/search.h)
 
 add_library(search STATIC ${SRCS_SEARCH})
 target_include_directories(search PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -51,9 +43,7 @@ target_link_libraries(search PUBLIC type_conversions)
 target_link_libraries(search PUBLIC status_macros)
 target_link_libraries(search PUBLIC valkey_module)
 
-set(SRCS_SEARCH_HEADER
-    ${CMAKE_CURRENT_LIST_DIR}/search.h
-)
+set(SRCS_SEARCH_HEADER ${CMAKE_CURRENT_LIST_DIR}/search.h)
 
 add_library(search_header STATIC ${SRCS_SEARCH_HEADER})
 target_include_directories(search_header PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -66,10 +56,7 @@ target_link_libraries(search_header PUBLIC hnswlib_vmsdk)
 target_link_libraries(search_header PUBLIC managed_pointers)
 target_link_libraries(search_header PUBLIC thread_pool)
 
-set(SRCS_FANOUT
-    ${CMAKE_CURRENT_LIST_DIR}/fanout.cc
-    ${CMAKE_CURRENT_LIST_DIR}/fanout.h
-)
+set(SRCS_FANOUT ${CMAKE_CURRENT_LIST_DIR}/fanout.cc ${CMAKE_CURRENT_LIST_DIR}/fanout.h)
 
 add_library(fanout STATIC ${SRCS_FANOUT})
 target_include_directories(fanout PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -89,10 +76,8 @@ target_link_libraries(fanout PUBLIC type_conversions)
 target_link_libraries(fanout PUBLIC status_macros)
 target_link_libraries(fanout PUBLIC valkey_module)
 
-set(SRCS_RESPONSE_GENERATOR
-    ${CMAKE_CURRENT_LIST_DIR}/response_generator.cc
-    ${CMAKE_CURRENT_LIST_DIR}/response_generator.h
-)
+set(SRCS_RESPONSE_GENERATOR ${CMAKE_CURRENT_LIST_DIR}/response_generator.cc
+                            ${CMAKE_CURRENT_LIST_DIR}/response_generator.h)
 
 add_library(response_generator STATIC ${SRCS_RESPONSE_GENERATOR})
 target_include_directories(response_generator PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -107,13 +92,9 @@ target_link_libraries(response_generator PUBLIC type_conversions)
 target_link_libraries(response_generator PUBLIC status_macros)
 target_link_libraries(response_generator PUBLIC valkey_module)
 
-set(SRCS_PLANNER
-    ${CMAKE_CURRENT_LIST_DIR}/planner.cc
-    ${CMAKE_CURRENT_LIST_DIR}/planner.h
-)
+set(SRCS_PLANNER ${CMAKE_CURRENT_LIST_DIR}/planner.cc ${CMAKE_CURRENT_LIST_DIR}/planner.h)
 
 add_library(planner STATIC ${SRCS_PLANNER})
 target_include_directories(planner PUBLIC ${CMAKE_CURRENT_LIST_DIR})
 target_link_libraries(planner PUBLIC index_base)
 target_link_libraries(planner PUBLIC vector_base)
-
