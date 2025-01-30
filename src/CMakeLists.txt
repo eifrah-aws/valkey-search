@@ -15,6 +15,9 @@ target_link_libraries(module_loader PUBLIC commands)
 target_link_libraries(module_loader PUBLIC module)
 target_link_libraries(module_loader PUBLIC valkey_module)
 target_link_libraries(module_loader PUBLIC server_events)
+if (UNIX AND NOT APPLE)
+    target_link_options(module_loader PRIVATE -Wl,--allow-multiple-definition)
+endif ()
 
 set(SRCS_VALKEY_SEARCH ${CMAKE_CURRENT_LIST_DIR}/valkey_search.cc
                        ${CMAKE_CURRENT_LIST_DIR}/valkey_search.h)
