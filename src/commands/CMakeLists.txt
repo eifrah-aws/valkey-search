@@ -1,14 +1,11 @@
-## --+ Auto generated file +--
+# --+ Auto generated file +--
 
 set(SRCS_COMMANDS
     ${CMAKE_CURRENT_LIST_DIR}/ft_create.cc
     ${CMAKE_CURRENT_LIST_DIR}/ft_dropindex.cc
-    ${CMAKE_CURRENT_LIST_DIR}/ft_info.cc
-    ${CMAKE_CURRENT_LIST_DIR}/ft_list.cc
-    ${CMAKE_CURRENT_LIST_DIR}/ft_search.cc
-    ${CMAKE_CURRENT_LIST_DIR}/commands.h
-    ${CMAKE_CURRENT_LIST_DIR}/ft_search.h
-)
+    ${CMAKE_CURRENT_LIST_DIR}/ft_info.cc ${CMAKE_CURRENT_LIST_DIR}/ft_list.cc
+    ${CMAKE_CURRENT_LIST_DIR}/ft_search.cc ${CMAKE_CURRENT_LIST_DIR}/commands.h
+    ${CMAKE_CURRENT_LIST_DIR}/ft_search.h)
 
 add_library(commands STATIC ${SRCS_COMMANDS})
 target_include_directories(commands PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -30,10 +27,8 @@ target_link_libraries(commands PUBLIC utils)
 target_link_libraries(commands PUBLIC status_macros)
 target_link_libraries(commands PUBLIC valkey_module)
 
-set(SRCS_FT_SEARCH_PARSER
-    ${CMAKE_CURRENT_LIST_DIR}/ft_search_parser.cc
-    ${CMAKE_CURRENT_LIST_DIR}/ft_search_parser.h
-)
+set(SRCS_FT_SEARCH_PARSER ${CMAKE_CURRENT_LIST_DIR}/ft_search_parser.cc
+                          ${CMAKE_CURRENT_LIST_DIR}/ft_search_parser.h)
 
 add_library(ft_search_parser STATIC ${SRCS_FT_SEARCH_PARSER})
 target_include_directories(ft_search_parser PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -49,10 +44,8 @@ target_link_libraries(ft_search_parser PUBLIC type_conversions)
 target_link_libraries(ft_search_parser PUBLIC status_macros)
 target_link_libraries(ft_search_parser PUBLIC valkey_module)
 
-set(SRCS_FT_CREATE_PARSER
-    ${CMAKE_CURRENT_LIST_DIR}/ft_create_parser.cc
-    ${CMAKE_CURRENT_LIST_DIR}/ft_create_parser.h
-)
+set(SRCS_FT_CREATE_PARSER ${CMAKE_CURRENT_LIST_DIR}/ft_create_parser.cc
+                          ${CMAKE_CURRENT_LIST_DIR}/ft_create_parser.h)
 
 add_library(ft_create_parser STATIC ${SRCS_FT_CREATE_PARSER})
 target_include_directories(ft_create_parser PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -65,10 +58,8 @@ target_link_libraries(ft_create_parser PUBLIC type_conversions)
 target_link_libraries(ft_create_parser PUBLIC status_macros)
 target_link_libraries(ft_create_parser PUBLIC valkey_module)
 
-set(SRCS_FILTER_PARSER
-    ${CMAKE_CURRENT_LIST_DIR}/filter_parser.cc
-    ${CMAKE_CURRENT_LIST_DIR}/filter_parser.h
-)
+set(SRCS_FILTER_PARSER ${CMAKE_CURRENT_LIST_DIR}/filter_parser.cc
+                       ${CMAKE_CURRENT_LIST_DIR}/filter_parser.h)
 
 add_library(filter_parser STATIC ${SRCS_FILTER_PARSER})
 target_include_directories(filter_parser PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -78,4 +69,3 @@ target_link_libraries(filter_parser PUBLIC numeric)
 target_link_libraries(filter_parser PUBLIC tag)
 target_link_libraries(filter_parser PUBLIC predicate)
 target_link_libraries(filter_parser PUBLIC status_macros)
-

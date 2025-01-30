@@ -1,23 +1,25 @@
 # --+ Auto generated file +--
 
 # Create a static library "coordinator_grpc_proto" with the proto files
-add_library(coordinator_grpc_proto STATIC ${CMAKE_CURRENT_LIST_DIR}/coordinator.proto)
+add_library(coordinator_grpc_proto STATIC
+            ${CMAKE_CURRENT_LIST_DIR}/coordinator.proto)
 protobuf_generate(
-    TARGET
-    coordinator_grpc_proto
-    LANGUAGE
-    grpc
-    GENERATE_EXTENSIONS
-    .grpc.pb.h
-    .grpc.pb.cc
-    PLUGIN
-    "protoc-gen-grpc=${grpc_cpp_plugin_location}")
+  TARGET
+  coordinator_grpc_proto
+  LANGUAGE
+  grpc
+  GENERATE_EXTENSIONS
+  .grpc.pb.h
+  .grpc.pb.cc
+  PLUGIN
+  "protoc-gen-grpc=${grpc_cpp_plugin_location}")
 
 # Create the proto code (no grpc)
 create_proto_library("src/coordinator" "coordinator" "coordinator_protolib")
 target_link_libraries(coordinator_grpc_proto coordinator_protolib)
 
-set(SRCS_SERVER ${CMAKE_CURRENT_LIST_DIR}/server.cc ${CMAKE_CURRENT_LIST_DIR}/server.h)
+set(SRCS_SERVER ${CMAKE_CURRENT_LIST_DIR}/server.cc
+                ${CMAKE_CURRENT_LIST_DIR}/server.h)
 
 add_library(server STATIC ${SRCS_SERVER})
 target_include_directories(server PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -42,7 +44,8 @@ target_link_libraries(server PUBLIC valkey_module)
 target_link_libraries(server PUBLIC gRPC::grpc gRPC::grpc++)
 target_link_libraries(server PUBLIC coordinator_grpc_proto)
 
-set(SRCS_CLIENT ${CMAKE_CURRENT_LIST_DIR}/client.cc ${CMAKE_CURRENT_LIST_DIR}/client.h)
+set(SRCS_CLIENT ${CMAKE_CURRENT_LIST_DIR}/client.cc
+                ${CMAKE_CURRENT_LIST_DIR}/client.h)
 
 add_library(client STATIC ${SRCS_CLIENT})
 target_include_directories(client PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -68,7 +71,8 @@ set(SRCS_UTIL ${CMAKE_CURRENT_LIST_DIR}/util.h)
 add_library(util INTERFACE ${SRCS_UTIL})
 target_include_directories(util INTERFACE ${CMAKE_CURRENT_LIST_DIR})
 
-set(SRCS_METADATA_MANAGER ${CMAKE_CURRENT_LIST_DIR}/metadata_manager.cc ${CMAKE_CURRENT_LIST_DIR}/metadata_manager.h)
+set(SRCS_METADATA_MANAGER ${CMAKE_CURRENT_LIST_DIR}/metadata_manager.cc
+                          ${CMAKE_CURRENT_LIST_DIR}/metadata_manager.h)
 
 add_library(metadata_manager STATIC ${SRCS_METADATA_MANAGER})
 target_include_directories(metadata_manager PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -82,8 +86,10 @@ target_link_libraries(metadata_manager PUBLIC type_conversions)
 target_link_libraries(metadata_manager PUBLIC utils)
 target_link_libraries(metadata_manager PUBLIC status_macros)
 target_link_libraries(metadata_manager PUBLIC valkey_module)
+target_link_libraries(metadata_manager PUBLIC highwayhash)
 
-set(SRCS_SEARCH_CONVERTER ${CMAKE_CURRENT_LIST_DIR}/search_converter.cc ${CMAKE_CURRENT_LIST_DIR}/search_converter.h)
+set(SRCS_SEARCH_CONVERTER ${CMAKE_CURRENT_LIST_DIR}/search_converter.cc
+                          ${CMAKE_CURRENT_LIST_DIR}/search_converter.h)
 
 add_library(search_converter STATIC ${SRCS_SEARCH_CONVERTER})
 target_include_directories(search_converter PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -99,7 +105,8 @@ target_link_libraries(search_converter PUBLIC managed_pointers)
 target_link_libraries(search_converter PUBLIC type_conversions)
 target_link_libraries(search_converter PUBLIC status_macros)
 
-set(SRCS_GRPC_SUSPENDER ${CMAKE_CURRENT_LIST_DIR}/grpc_suspender.cc ${CMAKE_CURRENT_LIST_DIR}/grpc_suspender.h)
+set(SRCS_GRPC_SUSPENDER ${CMAKE_CURRENT_LIST_DIR}/grpc_suspender.cc
+                        ${CMAKE_CURRENT_LIST_DIR}/grpc_suspender.h)
 
 add_library(grpc_suspender STATIC ${SRCS_GRPC_SUSPENDER})
 target_include_directories(grpc_suspender PUBLIC ${CMAKE_CURRENT_LIST_DIR})

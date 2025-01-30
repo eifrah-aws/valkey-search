@@ -1,3 +1,3 @@
-## --+ Auto generated file +--
+# --+ Auto generated file +--
 
 add_subdirectory(c)

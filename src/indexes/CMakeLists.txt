@@ -12,9 +12,11 @@ target_link_libraries(index_base INTERFACE string_interning)
 target_link_libraries(index_base INTERFACE managed_pointers)
 target_link_libraries(index_base INTERFACE valkey_module)
 
-set(SRCS_VECTOR_BASE ${CMAKE_CURRENT_LIST_DIR}/vector_base.cc ${CMAKE_CURRENT_LIST_DIR}/vector_base.h)
+set(SRCS_VECTOR_BASE ${CMAKE_CURRENT_LIST_DIR}/vector_base.cc
+                     ${CMAKE_CURRENT_LIST_DIR}/vector_base.h)
 
-add_library(vector_base STATIC ${SRCS_VECTOR_BASE} ${INDEX_SCHEMA_PROTO_HDRS} ${INDEX_SCHEMA_PROTO_SRCS})
+add_library(vector_base STATIC ${SRCS_VECTOR_BASE} ${INDEX_SCHEMA_PROTO_HDRS}
+                               ${INDEX_SCHEMA_PROTO_SRCS})
 target_include_directories(vector_base PUBLIC ${CMAKE_CURRENT_LIST_DIR})
 target_link_libraries(vector_base PUBLIC index_base)
 target_link_libraries(vector_base PUBLIC numeric)
@@ -35,7 +37,8 @@ target_link_libraries(vector_base PUBLIC type_conversions)
 target_link_libraries(vector_base PUBLIC status_macros)
 target_link_libraries(vector_base PUBLIC valkey_module)
 
-set(SRCS_VECTOR_HNSW ${CMAKE_CURRENT_LIST_DIR}/vector_hnsw.cc ${CMAKE_CURRENT_LIST_DIR}/vector_hnsw.h)
+set(SRCS_VECTOR_HNSW ${CMAKE_CURRENT_LIST_DIR}/vector_hnsw.cc
+                     ${CMAKE_CURRENT_LIST_DIR}/vector_hnsw.h)
 
 add_library(vector_hnsw STATIC ${SRCS_VECTOR_HNSW})
 target_include_directories(vector_hnsw PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -52,7 +55,8 @@ target_link_libraries(vector_hnsw PUBLIC utils)
 target_link_libraries(vector_hnsw PUBLIC status_macros)
 target_link_libraries(vector_hnsw PUBLIC valkey_module)
 
-set(SRCS_NUMERIC ${CMAKE_CURRENT_LIST_DIR}/numeric.cc ${CMAKE_CURRENT_LIST_DIR}/numeric.h)
+set(SRCS_NUMERIC ${CMAKE_CURRENT_LIST_DIR}/numeric.cc
+                 ${CMAKE_CURRENT_LIST_DIR}/numeric.h)
 
 add_library(numeric STATIC ${SRCS_NUMERIC})
 target_include_directories(numeric PUBLIC ${CMAKE_CURRENT_LIST_DIR})
@@ -77,7 +81,8 @@ target_link_libraries(tag PUBLIC type_conversions)
 target_link_libraries(tag PUBLIC valkey_module)
 target_link_libraries(tag PUBLIC ${INDEX_SCHEMA_PROTO_LIB})
 
-set(SRCS_VECTOR_FLAT ${CMAKE_CURRENT_LIST_DIR}/vector_flat.cc ${CMAKE_CURRENT_LIST_DIR}/vector_flat.h)
+set(SRCS_VECTOR_FLAT ${CMAKE_CURRENT_LIST_DIR}/vector_flat.cc
+                     ${CMAKE_CURRENT_LIST_DIR}/vector_flat.h)
 
 add_library(vector_flat STATIC ${SRCS_VECTOR_FLAT})
 target_include_directories(vector_flat PUBLIC ${CMAKE_CURRENT_LIST_DIR})

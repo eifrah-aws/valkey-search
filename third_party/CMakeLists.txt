@@ -1,4 +1,4 @@
-## --+ Auto generated file +--
+# --+ Auto generated file +--
 
 add_subdirectory(simsimd)
 add_subdirectory(hdrhistogram_c)
