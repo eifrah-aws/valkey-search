@@ -10,20 +10,19 @@ set(SRCS_SEGMENT_TREE ${CMAKE_CURRENT_LIST_DIR}/segment_tree.h)
 add_library(segment_tree INTERFACE ${SRCS_SEGMENT_TREE})
 target_include_directories(segment_tree INTERFACE ${CMAKE_CURRENT_LIST_DIR})
 
-set(SRCS_STRING_INTERNING ${CMAKE_CURRENT_LIST_DIR}/string_interning.cc
-                          ${CMAKE_CURRENT_LIST_DIR}/string_interning.h)
+set(SRCS_STRING_INTERNING ${CMAKE_CURRENT_LIST_DIR}/string_interning.cc ${CMAKE_CURRENT_LIST_DIR}/string_interning.h)
 
 add_library(string_interning STATIC ${SRCS_STRING_INTERNING})
 target_include_directories(string_interning PUBLIC ${CMAKE_CURRENT_LIST_DIR})
 target_link_libraries(string_interning PUBLIC allocator)
 
-set(SRCS_ALLOCATOR ${CMAKE_CURRENT_LIST_DIR}/allocator.cc
-                   ${CMAKE_CURRENT_LIST_DIR}/allocator.h)
+set(SRCS_ALLOCATOR ${CMAKE_CURRENT_LIST_DIR}/allocator.cc ${CMAKE_CURRENT_LIST_DIR}/allocator.h)
 
 add_library(allocator STATIC ${SRCS_ALLOCATOR})
 target_include_directories(allocator PUBLIC ${CMAKE_CURRENT_LIST_DIR})
 target_link_libraries(allocator PUBLIC intrusive_list)
 target_link_libraries(allocator PUBLIC intrusive_ref_count)
+target_link_libraries(allocator PUBLIC absl::base)
 
 set(SRCS_INTRUSIVE_LIST ${CMAKE_CURRENT_LIST_DIR}/intrusive_list.h)
 
@@ -39,5 +38,4 @@ target_link_libraries(lru INTERFACE intrusive_list)
 set(SRCS_INTRUSIVE_REF_COUNT ${CMAKE_CURRENT_LIST_DIR}/intrusive_ref_count.h)
 
 add_library(intrusive_ref_count INTERFACE ${SRCS_INTRUSIVE_REF_COUNT})
-target_include_directories(intrusive_ref_count
-                           INTERFACE ${CMAKE_CURRENT_LIST_DIR})
+target_include_directories(intrusive_ref_count INTERFACE ${CMAKE_CURRENT_LIST_DIR})

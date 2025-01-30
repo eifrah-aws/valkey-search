@@ -5,16 +5,7 @@ project(VSS)
 
 set(CMAKE_CXX_STANDARD 20 REQUIRED)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
-
-if(NOT EXISTS "${CMAKE_SOURCE_DIR}/submodules/abseil-cpp")
-  message(WARNING "Could not locate submodule 'abseil'")
-  message(FATAL_ERROR "Make sure to run 'git submodule update --init'")
-endif()
-
-if(NOT EXISTS "${CMAKE_SOURCE_DIR}/submodules/googletest")
-  message(WARNING "Could not locate submodule 'googletest'")
-  message(FATAL_ERROR "Make sure to run 'git submodule update --init'")
-endif()
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 if(NOT EXISTS "${CMAKE_SOURCE_DIR}/submodules/highwayhash")
   message(WARNING "Could not locate submodule 'highwayhash'")
@@ -22,15 +13,19 @@ if(NOT EXISTS "${CMAKE_SOURCE_DIR}/submodules/highwayhash")
 endif()
 
 find_package(grpc CONFIG REQUIRED)
+
+# brew install absl
+find_package(absl REQUIRED)
+
+# brew install googletest
+find_package(GTest REQUIRED)
+
 get_target_property(grpc_cpp_plugin_location gRPC::grpc_cpp_plugin LOCATION)
 message(STATUS "gRPC C++ plugin: ${grpc_cpp_plugin_location}")
 
-add_subdirectory(${CMAKE_SOURCE_DIR}/submodules/abseil-cpp)
-add_subdirectory(${CMAKE_SOURCE_DIR}/submodules/googletest)
 # target: highwayhash
 add_subdirectory(${CMAKE_SOURCE_DIR}/submodules/highwayhash)
 
-set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include_directories(${CMAKE_SOURCE_DIR})
 

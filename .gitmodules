@@ -1,9 +1,3 @@
-[submodule "submodules/abseil-cpp"]
-	path = submodules/abseil-cpp
-	url = https://github.com/abseil/abseil-cpp.git
-[submodule "submodules/googletest"]
-	path = submodules/googletest
-	url = https://github.com/google/googletest.git
 [submodule "submodules/highwayhash"]
 	path = submodules/highwayhash
 	url = https://github.com/google/highwayhash.git
