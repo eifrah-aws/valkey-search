@@ -14,15 +14,14 @@ protobuf_generate(
     "protoc-gen-grpc=${grpc_cpp_plugin_location}")
 
 # Create the proto code (no grpc)
-create_proto_library("src/coordinator" "coordinator" "coordinator_protolib")
-target_link_libraries(coordinator_grpc_proto coordinator_protolib)
+create_proto_library("src/coordinator" "coordinator" "coordinator_cc_proto")
+target_link_libraries(coordinator_grpc_proto coordinator_cc_proto)
 
 set(SRCS_SERVER ${CMAKE_CURRENT_LIST_DIR}/server.cc ${CMAKE_CURRENT_LIST_DIR}/server.h)
 
 add_library(server STATIC ${SRCS_SERVER})
 target_include_directories(server PUBLIC ${CMAKE_CURRENT_LIST_DIR})
 target_include_directories(server PRIVATE ${CMAKE_BINARY_DIR})
-target_link_libraries(server PUBLIC coordinator_cc_grpc_proto)
 target_link_libraries(server PUBLIC coordinator_cc_proto)
 target_link_libraries(server PUBLIC grpc_suspender)
 target_link_libraries(server PUBLIC metadata_manager)
@@ -47,7 +46,6 @@ set(SRCS_CLIENT ${CMAKE_CURRENT_LIST_DIR}/client.cc ${CMAKE_CURRENT_LIST_DIR}/cl
 add_library(client STATIC ${SRCS_CLIENT})
 target_include_directories(client PUBLIC ${CMAKE_CURRENT_LIST_DIR})
 target_include_directories(client PRIVATE ${CMAKE_BINARY_DIR})
-target_link_libraries(client PUBLIC coordinator_cc_grpc_proto)
 target_link_libraries(client PUBLIC coordinator_cc_proto)
 target_link_libraries(client PUBLIC grpc_suspender)
 target_link_libraries(client PUBLIC metrics)

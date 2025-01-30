@@ -7,13 +7,14 @@ add_subdirectory(query)
 add_subdirectory(indexes)
 set(SRCS_MODULE_LOADER ${CMAKE_CURRENT_LIST_DIR}/module_loader.cc)
 
-add_library(module_loader STATIC ${SRCS_MODULE_LOADER})
+add_library(module_loader SHARED ${SRCS_MODULE_LOADER})
 target_include_directories(module_loader PUBLIC ${CMAKE_CURRENT_LIST_DIR})
 target_link_libraries(module_loader PUBLIC keyspace_event_manager)
 target_link_libraries(module_loader PUBLIC valkey_search)
 target_link_libraries(module_loader PUBLIC commands)
 target_link_libraries(module_loader PUBLIC module)
 target_link_libraries(module_loader PUBLIC valkey_module)
+target_link_libraries(module_loader PUBLIC server_events)
 
 set(SRCS_VALKEY_SEARCH ${CMAKE_CURRENT_LIST_DIR}/valkey_search.cc
                        ${CMAKE_CURRENT_LIST_DIR}/valkey_search.h)
