@@ -5,3 +5,7 @@ resolved_deps.py
 *.swp
 compile_commands.json
 .devcontainer/devcontainer.json
+.codelite/
+.cache/
+build-*
+*.workspace
