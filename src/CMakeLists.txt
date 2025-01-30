@@ -59,12 +59,12 @@ target_link_libraries(keyspace_event_manager PUBLIC valkey_module)
 
 set(SRCS_ATTRIBUTE ${CMAKE_CURRENT_LIST_DIR}/attribute.h)
 
-add_library(attribute STATIC ${SRCS_ATTRIBUTE})
-target_include_directories(attribute PUBLIC ${CMAKE_CURRENT_LIST_DIR})
-target_link_libraries(attribute PUBLIC index_schema_cc_proto)
-target_link_libraries(attribute PUBLIC index_base)
-target_link_libraries(attribute PUBLIC managed_pointers)
-target_link_libraries(attribute PUBLIC valkey_module)
+add_library(attribute INTERFACE ${SRCS_ATTRIBUTE})
+target_include_directories(attribute INTERFACE ${CMAKE_CURRENT_LIST_DIR})
+target_link_libraries(attribute INTERFACE index_schema_cc_proto)
+target_link_libraries(attribute INTERFACE index_base)
+target_link_libraries(attribute INTERFACE managed_pointers)
+target_link_libraries(attribute INTERFACE valkey_module)
 
 set(SRCS_METRICS ${CMAKE_CURRENT_LIST_DIR}/metrics.h)
 

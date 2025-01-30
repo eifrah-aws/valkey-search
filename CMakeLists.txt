@@ -3,15 +3,28 @@
 cmake_minimum_required(VERSION 3.16)
 project(VSS)
 
-set(CMAKE_CXX_STANDARD 17)
-add_subdirectory(submodules/abseil-cpp)
+set(CMAKE_CXX_STANDARD 20 REQUIRED)
+
+if(NOT EXISTS "${CMAKE_SOURCE_DIR}/submodules/abseil-cpp")
+    message(WARNING "Could not locate submodule 'abseil'")
+    message(FATAL_ERROR "Make sure to run 'git submodule update --init'")
+endif()
+
+if(NOT EXISTS "${CMAKE_SOURCE_DIR}/submodules/googletest")
+    message(WARNING "Could not locate submodule 'googletest'")
+    message(FATAL_ERROR "Make sure to run 'git submodule update --init'")
+endif()
+
+add_subdirectory(${CMAKE_SOURCE_DIR}/submodules/abseil-cpp)
+add_subdirectory(${CMAKE_SOURCE_DIR}/submodules/googletest)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 include_directories(${CMAKE_SOURCE_DIR})
 
-# Make absl include path available for all the sub projects
+# Make absl / gtest include path available for all the sub projects
 include_directories(${CMAKE_SOURCE_DIR}/submodules/abseil-cpp)
+include_directories(${CMAKE_SOURCE_DIR}/submodules/googletest/googletest/include)
 
 # protobuf helper method. Generated files are placed here: ${CMAKE_BINARY_DIR}/generated/${PROTO_OUT}, this means that
 # PROTO_OUT must be relative path (or an empty string). The generated target will add to the include path
