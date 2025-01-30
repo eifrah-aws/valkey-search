@@ -12,20 +12,54 @@ if(NOT EXISTS "${CMAKE_SOURCE_DIR}/submodules/highwayhash")
   message(FATAL_ERROR "Make sure to run 'git submodule update --init'")
 endif()
 
-find_package(grpc CONFIG REQUIRED)
+if (UNIX AND NOT APPLE)
+    function (pkg_config PKGNAME OUT_VARIABLE)
+        if (NOT FOUND_PKGCONFIG)
+            # Locate pkg-config once
+            find_package(PkgConfig REQUIRED)
+            set(FOUND_PKGCONFIG 1)
+        endif ()
+        pkg_check_modules(__PREFIX REQUIRED ${PKGNAME})
+        message(STATUS "Found library for '${PKGNAME}': ${__PREFIX_LIBRARIES}")
+        set(${OUT_VARIABLE}
+            "${__PREFIX_LIBRARIES}"
+            PARENT_SCOPE)
+    endfunction ()
+endif()
 
-# brew install absl
-find_package(absl REQUIRED)
+if (APPLE)
+    find_package(grpc CONFIG REQUIRED)
+    # brew install absl
+    find_package(absl REQUIRED)
+    # brew install googletest
+    find_package(GTest REQUIRED)
+    get_target_property(grpc_cpp_plugin_location gRPC::grpc_cpp_plugin LOCATION)
+    message(STATUS "gRPC C++ plugin: ${grpc_cpp_plugin_location}")
+else()
+    # sudo apt install libprotoc-dev libprotobuf-dev
+    # git clone --recurse-submodules --shallow-submodules https://github.com/grpc/grpc
+    # cmake -DgRPC_INSTALL=ON       -DgRPC_BUILD_TESTS=OFF       -DCMAKE_CXX_STANDARD=20       -DCMAKE_INSTALL_PREFIX=/usr/local ..
+    set(CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH}:/usr/local/lib/cmake/grpc:/usr/local/lib/cmake/absl:/usr/local/lib/protobuf")
+    find_program(grpc_cpp_plugin_location grpc_cpp_plugin HINTS /usr/local/bin /usr/bin)
+    find_program(Protobuf_PROTOC_EXECUTABLE protoc HINTS /usr/local/bin /usr/bin)
 
-# brew install googletest
-find_package(GTest REQUIRED)
+    if (NOT GRPC_LIB)
+        pkg_config(grpc GRPC_LIB)
+        set(GRPC_LIB ${GRPC_LIB} CACHE STRING "GRPC_LIB")
+    endif ()
+    message(STATUS "GRPC_LIB => ${GRPC_LIB}")
+    message(STATUS "gRPC C++ plugin: ${grpc_cpp_plugin_location}")
+endif()
 
-get_target_property(grpc_cpp_plugin_location gRPC::grpc_cpp_plugin LOCATION)
-message(STATUS "gRPC C++ plugin: ${grpc_cpp_plugin_location}")
+if (UNIX AND NOT APPLE)
+    set(protobuf_generate_PROTOC_EXE ${Protobuf_PROTOC_EXECUTABLE})
+    message(STATUS "protobuf_generate_PROTOC_EXE is set to ${protobuf_generate_PROTOC_EXE}")
+    set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/Modules/")
+    include(protobuf_generate)
+endif ()
 
 # target: highwayhash
 add_subdirectory(${CMAKE_SOURCE_DIR}/submodules/highwayhash)
-
 
 include_directories(${CMAKE_SOURCE_DIR})
 
@@ -40,7 +74,6 @@ include_directories(
 # extension). "OUT_LIBNAME" is the user provided target name to create
 function(create_proto_library PROTO_FILE_SRC_DIR PROTO_BASE_FILE_NAME
          OUT_LIBNAME)
-  find_package(Protobuf REQUIRED)
   set(PROTO_OUT_DIR ${CMAKE_BINARY_DIR}/${PROTO_FILE_SRC_DIR})
   set(PROTO_IN_DIR ${CMAKE_SOURCE_DIR}/${PROTO_FILE_SRC_DIR})
   file(MAKE_DIRECTORY ${PROTO_OUT_DIR})

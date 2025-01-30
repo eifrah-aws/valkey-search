@@ -16,7 +16,11 @@ set(SRCS_UTILS ${CMAKE_CURRENT_LIST_DIR}/utils.cc ${CMAKE_CURRENT_LIST_DIR}/util
 add_library(utils STATIC ${SRCS_UTILS})
 target_include_directories(utils PUBLIC ${CMAKE_CURRENT_LIST_DIR})
 target_link_libraries(utils PUBLIC valkey_module)
-target_link_libraries(utils PUBLIC absl::core_headers)
+if (APPLE)
+    target_link_libraries(utils PUBLIC absl::core_headers)
+else ()
+    target_link_libraries(utils PUBLIC ${GRPC_LIB})
+endif()
 
 set(SRCS_LATENCY_SAMPLER ${CMAKE_CURRENT_LIST_DIR}/latency_sampler.h)
 
@@ -37,7 +41,11 @@ set(SRCS_THREAD_POOL ${CMAKE_CURRENT_LIST_DIR}/thread_pool.cc ${CMAKE_CURRENT_LI
 
 add_library(thread_pool STATIC ${SRCS_THREAD_POOL})
 target_include_directories(thread_pool PUBLIC ${CMAKE_CURRENT_LIST_DIR})
-target_link_libraries(thread_pool PUBLIC absl::base absl::any_invocable)
+if (APPLE)
+    target_link_libraries(thread_pool PUBLIC absl::base absl::any_invocable)
+else()
+    target_link_libraries(thread_pool PUBLIC ${GRPC_LIB})
+endif()
 
 set(SRCS_TIME_SLICED_MRMW_MUTEX ${CMAKE_CURRENT_LIST_DIR}/time_sliced_mrmw_mutex.cc
                                 ${CMAKE_CURRENT_LIST_DIR}/time_sliced_mrmw_mutex.h)
@@ -60,7 +68,7 @@ set(SRCS_MODULE ${CMAKE_CURRENT_LIST_DIR}/module.cc ${CMAKE_CURRENT_LIST_DIR}/mo
 add_library(module STATIC ${SRCS_MODULE})
 target_include_directories(module PUBLIC ${CMAKE_CURRENT_LIST_DIR})
 target_link_libraries(module PUBLIC log)
-target_link_libraries(module PUBLIC memory_allocation)
+#target_link_libraries(module PUBLIC memory_allocation)
 target_link_libraries(module PUBLIC utils)
 target_link_libraries(module PUBLIC valkey_module)
 

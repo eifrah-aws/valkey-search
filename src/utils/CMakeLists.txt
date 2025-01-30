@@ -22,7 +22,11 @@ add_library(allocator STATIC ${SRCS_ALLOCATOR})
 target_include_directories(allocator PUBLIC ${CMAKE_CURRENT_LIST_DIR})
 target_link_libraries(allocator PUBLIC intrusive_list)
 target_link_libraries(allocator PUBLIC intrusive_ref_count)
-target_link_libraries(allocator PUBLIC absl::base)
+if (APPLE)
+    target_link_libraries(allocator PUBLIC absl::base)
+else ()
+    target_link_libraries(allocator PUBLIC ${GRPC_LIB})
+endif ()
 
 set(SRCS_INTRUSIVE_LIST ${CMAKE_CURRENT_LIST_DIR}/intrusive_list.h)
 
